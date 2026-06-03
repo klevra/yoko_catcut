@@ -1,0 +1,50 @@
+.create-project-form h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.create-project-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-project-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.create-project-form input:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.create-project-form button {
+  padding: 10px 20px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.create-project-form button:hover:not(:disabled) {
+  background: #0052a3;
+}
+
+.create-project-form button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.create-project-form .error {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin: 0;
+}
