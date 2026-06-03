@@ -1,0 +1,15 @@
+app:
+  server:
+    host: 0.0.0.0
+    backend_port: 8000
+    frontend_port: 3000
+    websocket_port: 8001
+
+  workspace:
+    root_path: ./workspace
+
+  storage:
+    type: local
+
+  model:
+    device: cpu

@@ -1,0 +1,46 @@
+app:
+  server:
+    host: 0.0.0.0
+    backend_port: 8000
+    frontend_port: 3000
+    websocket_port: 8001
+
+  workspace:
+    root_path: ./workspace
+
+  storage:
+    type: local
+
+  nas:
+    enabled: false
+    protocol: smb
+    host: 192.168.0.10
+    port: 445
+    share_name: video
+    username: user
+    password: password
+
+  upload:
+    max_file_size_gb: 10
+    max_concurrent_uploads: 5
+
+  model:
+    whisper_path: ./models/whisper
+    whisper_model: large-v3
+    device: cpu
+
+  ffmpeg:
+    binary: ffmpeg
+
+  logging:
+    level: INFO
+    path: ./logs
+
+  retention:
+    upload_days: 30
+    output_days: 30
+    log_days: 90
+
+  cors:
+    allowed_origins:
+      - "*"

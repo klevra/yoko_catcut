@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: yoko_catcut_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./application.yml:/app/application.yml
+      - ./workspace:/app/workspace
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - YOKO_CONFIG=/app/application.yml
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: yoko_catcut_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
