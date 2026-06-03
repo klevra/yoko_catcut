@@ -8,7 +8,7 @@ settings = get_settings()
 
 app = FastAPI(
     title="Yoko CatCut API",
-    version="0.1.0",
+    version="0.1.1",
     description="AI video editing platform backend"
 )
 
