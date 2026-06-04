@@ -36,8 +36,14 @@ class Project:
         self.user_id = user_id
         self.project_name = project_name
         self.path = path
-        self.created_at = created_at or datetime.now()
-        self.updated_at = updated_at or datetime.now()
+        self.created_at = self._parse_datetime(created_at)
+        self.updated_at = self._parse_datetime(updated_at)
+
+    @staticmethod
+    def _parse_datetime(value: Optional[datetime]) -> datetime:
+        if isinstance(value, str):
+            return datetime.fromisoformat(value)
+        return value or datetime.now()
 
 
 class Job:
@@ -58,8 +64,14 @@ class Job:
         self.job_type = job_type
         self.status = status
         self.metadata = metadata or {}
-        self.created_at = created_at or datetime.now()
-        self.updated_at = updated_at or datetime.now()
+        self.created_at = self._parse_datetime(created_at)
+        self.updated_at = self._parse_datetime(updated_at)
+
+    @staticmethod
+    def _parse_datetime(value: Optional[datetime]) -> datetime:
+        if isinstance(value, str):
+            return datetime.fromisoformat(value)
+        return value or datetime.now()
 
 
 class Upload:
@@ -81,4 +93,10 @@ class Upload:
         self.path = path
         self.file_size = file_size
         self.duration = duration
-        self.created_at = created_at or datetime.now()
+        self.created_at = self._parse_datetime(created_at)
+
+    @staticmethod
+    def _parse_datetime(value: Optional[datetime]) -> datetime:
+        if isinstance(value, str):
+            return datetime.fromisoformat(value)
+        return value or datetime.now()
