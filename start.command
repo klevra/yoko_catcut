@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Yoko CatCut Startup Script
@@ -99,4 +98,3 @@ echo "📚 API Docs:  http://localhost:${BACKEND_HOST_PORT}/docs"
 echo ""
 echo "중지하려면 stop.command를 실행하세요."
 echo ""
-

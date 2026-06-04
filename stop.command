@@ -19,6 +19,8 @@ if ! command -v docker >/dev/null 2>&1; then
     echo "🚨 docker CLI를 찾을 수 없습니다. Docker Desktop을 설치하고 다시 시도하세요."
     exit 1
 fi
+
+# .env 또는 .env.example 로드
 if [ -f "$PROJECT_DIR/.env" ]; then
     set -a
     source "$PROJECT_DIR/.env"
@@ -34,9 +36,11 @@ echo "  Yoko CatCut - Stopping Application"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# 우선 docker compose down 실행
+# Docker Compose 중지
 echo "⏹️  Docker Compose 중지 중..."
 docker compose down || true
+
+echo ""
 
 # 환경 변수 기반 컨테이너 이름으로 남아있는 컨테이너 강제 제거
 BACKEND_NAME="${BACKEND_CONTAINER_NAME:-yoko_catcut_backend}"
