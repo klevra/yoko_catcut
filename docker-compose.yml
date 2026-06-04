@@ -2,9 +2,9 @@ services:
   backend:
     build:
       context: ./backend
-    container_name: yoko_catcut_backend
+    container_name: "${BACKEND_CONTAINER_NAME:-yoko_catcut_backend}"
     ports:
-      - "8000:8000"
+      - "${BACKEND_HOST_PORT:-8000}:${BACKEND_CONTAINER_PORT:-8000}"
     volumes:
       - ./application.yml:/app/application.yml
       - ./workspace:/app/workspace
@@ -16,8 +16,8 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: yoko_catcut_frontend
+    container_name: "${FRONTEND_CONTAINER_NAME:-yoko_catcut_frontend}"
     ports:
-      - "3000:3000"
+      - "${FRONTEND_HOST_PORT:-3000}:${FRONTEND_CONTAINER_PORT:-3000}"
     depends_on:
       - backend
