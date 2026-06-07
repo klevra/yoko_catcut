@@ -1,5 +1,6 @@
 from pathlib import Path
 from app.models.models import Project
+from app.repositories.job_repository import JobRepository
 from app.repositories.project_repository import ProjectRepository
 from datetime import datetime
 from app.core.config import get_settings
@@ -12,10 +13,15 @@ class ProjectService:
         settings = get_settings()
         self.workspace_root = Path(settings.workspace_root)
         self.repository = ProjectRepository()
+        self.job_repository = JobRepository()
 
     def create_project(self, user_id: str, project_name: str) -> dict:
         """프로젝트 생성"""
-        # 프로젝트 경로 생성
+        self._validate_segment(user_id, "user_id")
+        self._validate_segment(project_name, "project_name")
+        if self.repository.read(user_id, project_name):
+            raise ValueError(f"Project already exists: {project_name}")
+
         project_path = self.workspace_root / user_id / project_name
         project_path.mkdir(parents=True, exist_ok=True)
 
@@ -48,6 +54,7 @@ class ProjectService:
 
     def list_projects(self, user_id: str) -> list:
         """사용자의 프로젝트 목록 조회"""
+        self._validate_segment(user_id, "user_id")
         projects = self.repository.list_by_user(user_id)
         return [
             {
@@ -62,6 +69,8 @@ class ProjectService:
 
     def get_project(self, user_id: str, project_name: str) -> dict:
         """프로젝트 상세 조회"""
+        self._validate_segment(user_id, "user_id")
+        self._validate_segment(project_name, "project_name")
         project = self.repository.read(user_id, project_name)
         if not project:
             raise ValueError(f"Project not found: {project_name}")
@@ -75,6 +84,13 @@ class ProjectService:
 
     def update_project(self, user_id: str, project_name: str, new_name: str) -> dict:
         """프로젝트 이름 변경"""
+        self._validate_segment(user_id, "user_id")
+        self._validate_segment(project_name, "project_name")
+        self._validate_segment(new_name, "project_name")
+        if new_name == project_name:
+            return self.get_project(user_id, project_name)
+        if self.repository.read(user_id, new_name):
+            raise ValueError(f"Project already exists: {new_name}")
         project = self.repository.read(user_id, project_name)
         if not project:
             raise ValueError(f"Project not found: {project_name}")
@@ -105,6 +121,8 @@ class ProjectService:
 
     def delete_project(self, user_id: str, project_name: str) -> bool:
         """프로젝트 삭제"""
+        self._validate_segment(user_id, "user_id")
+        self._validate_segment(project_name, "project_name")
         project = self.repository.read(user_id, project_name)
         if not project:
             raise ValueError(f"Project not found: {project_name}")
@@ -116,5 +134,17 @@ class ProjectService:
         if project_path.exists():
             shutil.rmtree(project_path)
 
-        # 저장소에서 삭제
-        return self.repository.delete(user_id, project_name)
+        deleted = self.repository.delete(user_id, project_name)
+        self.job_repository.delete_by_project(user_id, project_name)
+        return deleted
+
+    @staticmethod
+    def _validate_segment(value: str, field_name: str) -> None:
+        if (
+            not value
+            or value in {".", ".."}
+            or "/" in value
+            or "\\" in value
+            or Path(value).name != value
+        ):
+            raise ValueError(f"Invalid {field_name}")

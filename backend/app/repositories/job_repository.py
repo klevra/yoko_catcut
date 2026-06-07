@@ -3,13 +3,17 @@ from app.models.models import Job, JobStatus, JobType
 import json
 import uuid
 from pathlib import Path
+from app.core.config import get_settings
 
 
 class JobRepository:
     """Job 데이터 영속성 관리"""
 
-    def __init__(self, storage_path: str = "./data/jobs"):
-        self.storage_path = Path(storage_path)
+    def __init__(self, storage_path: str = None):
+        self.storage_path = Path(
+            storage_path
+            or Path(get_settings().workspace_root) / ".system" / "jobs"
+        )
         self.storage_path.mkdir(parents=True, exist_ok=True)
 
     def _get_job_file(self, job_id: str) -> Path:
@@ -28,8 +32,10 @@ class JobRepository:
             "created_at": job.created_at.isoformat(),
             "updated_at": job.updated_at.isoformat(),
         }
-        with open(file_path, "w") as f:
-            json.dump(data, f, indent=2)
+        temporary = file_path.with_suffix(".tmp")
+        with open(temporary, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        temporary.replace(file_path)
         return job
 
     def read(self, job_id: str) -> Optional[Job]:
@@ -37,7 +43,7 @@ class JobRepository:
         file_path = self._get_job_file(job_id)
         if not file_path.exists():
             return None
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
         return Job(
             job_id=data["job_id"],
@@ -54,12 +60,33 @@ class JobRepository:
         """프로젝트의 모든 Job 조회"""
         jobs = []
         for file in self.storage_path.glob("*.json"):
-            with open(file, "r") as f:
+            with open(file, "r", encoding="utf-8") as f:
                 data = json.load(f)
             if (
                 data.get("user_id") == user_id
                 and data.get("project_name") == project_name
             ):
+                jobs.append(
+                    Job(
+                        job_id=data["job_id"],
+                        user_id=data["user_id"],
+                        project_name=data["project_name"],
+                        job_type=JobType(data["job_type"]),
+                        status=JobStatus(data["status"]),
+                        metadata=data["metadata"],
+                        created_at=data.get("created_at"),
+                        updated_at=data.get("updated_at"),
+                    )
+                )
+        return jobs
+
+    def list_by_status(self, status: JobStatus) -> List[Job]:
+        """특정 상태의 모든 Job 조회"""
+        jobs = []
+        for file in self.storage_path.glob("*.json"):
+            with open(file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if data.get("status") == status.value:
                 jobs.append(
                     Job(
                         job_id=data["job_id"],
@@ -85,3 +112,11 @@ class JobRepository:
             file_path.unlink()
             return True
         return False
+
+    def delete_by_project(self, user_id: str, project_name: str) -> int:
+        """프로젝트에 속한 Job 메타데이터 삭제"""
+        deleted = 0
+        for job in self.list_by_project(user_id, project_name):
+            if self.delete(job.job_id):
+                deleted += 1
+        return deleted

@@ -37,12 +37,14 @@ class LocalStorageAdapter(StorageAdapter):
     """로컬 파일 시스템 스토리지"""
 
     def __init__(self, base_path: str = "./workspace"):
-        self.base_path = Path(base_path)
+        self.base_path = Path(base_path).resolve()
         self.base_path.mkdir(parents=True, exist_ok=True)
 
     def _get_full_path(self, file_path: str) -> Path:
         """전체 경로 조회"""
-        full_path = self.base_path / file_path
+        full_path = (self.base_path / file_path).resolve()
+        if full_path != self.base_path and self.base_path not in full_path.parents:
+            raise ValueError("Storage path escapes the configured workspace")
         return full_path
 
     async def save_file(self, source_path: str, dest_path: str) -> str:

@@ -15,13 +15,16 @@ class Settings(BaseModel):
 
     workspace_root: str = "./workspace"
     storage_type: str = "local"
+    users_file: str = "./workspace/.system/accounts/users.json"
 
     max_file_size_gb: int = 10
     max_concurrent_uploads: int = 5
 
     ffmpeg_binary: str = "ffmpeg"
+    ffprobe_binary: str = "ffprobe"
+    subtitle_font: str = "Noto Sans CJK KR"
     whisper_path: str = "./models/whisper"
-    whisper_model: str = "large-v3"
+    whisper_model: str = "base"
     device: str = "cpu"
 
     log_level: str = "INFO"
@@ -46,6 +49,7 @@ def get_settings() -> Settings:
     server = app.get("server", {})
     workspace = app.get("workspace", {})
     storage = app.get("storage", {})
+    auth = app.get("auth", {})
     upload = app.get("upload", {})
     model = app.get("model", {})
     ffmpeg = app.get("ffmpeg", {})
@@ -59,11 +63,17 @@ def get_settings() -> Settings:
         websocket_port=server.get("websocket_port", 8001),
         workspace_root=workspace.get("root_path", "./workspace"),
         storage_type=storage.get("type", "local"),
+        users_file=auth.get(
+            "users_file",
+            "./workspace/.system/accounts/users.json",
+        ),
         max_file_size_gb=upload.get("max_file_size_gb", 10),
         max_concurrent_uploads=upload.get("max_concurrent_uploads", 5),
         ffmpeg_binary=ffmpeg.get("binary", "ffmpeg"),
+        ffprobe_binary=ffmpeg.get("probe_binary", "ffprobe"),
+        subtitle_font=ffmpeg.get("subtitle_font", "Noto Sans CJK KR"),
         whisper_path=model.get("whisper_path", "./models/whisper"),
-        whisper_model=model.get("whisper_model", "large-v3"),
+        whisper_model=model.get("whisper_model", "base"),
         device=model.get("device", "cpu"),
         log_level=logging.get("level", "INFO"),
         log_path=logging.get("path", "./logs"),

@@ -1,4 +1,4 @@
-# Yoko CatCut Master Prompt v0.1
+# Yoko CatCut Master Prompt v0.5.0
 
 너는 Senior Software Architect, Lead Backend Engineer, Lead Frontend Engineer, AI Engineer, DevOps Engineer 역할을 동시에 수행한다.
 
@@ -161,6 +161,13 @@ workspace/
 - Multi Upload
 - Upload Progress
 
+구현 규칙
+
+- 업로드 파일 전체를 메모리에 적재하지 않는다.
+- 지원 확장자와 ffprobe 결과를 모두 검증한다.
+- 실제 비디오 스트림이 없는 파일은 거부한다.
+- 업로드 메타데이터는 Workspace에 영속화한다.
+
 ---
 
 ## AI 기능
@@ -308,7 +315,8 @@ AI
 
 FFmpeg
 
-- ffmpeg_path
+- binary
+- probe_binary
 
 Logging
 
@@ -530,3 +538,38 @@ Phase 9
 모든 변경사항은 문서와 동기화한다.
 
 항상 유지보수성과 확장성을 우선한다.
+
+---
+
+## 현재 구현 기준
+
+현재 버전: v0.5.0
+
+완료:
+
+- Project CRUD 및 Workspace
+- 단일 영상 스트리밍 업로드
+- ffprobe 파일 검증 및 메타데이터 분석
+- Upload Repository
+- Job Processor 및 상태 영속화
+- Job 상태 조회 UI
+- 업로드 영상 목록 및 편집 페이지 진입
+- 원본 영상 재생, 구간 지정, 출력 비율 초안
+- 다중 편집 구간 및 구간별 코멘트
+- Faster-Whisper 자동 자막
+- SRT, VTT, JSON 및 Subtitle Viewer
+- 자막 반복 재생, 시간/문구 수정, 분할
+- FFmpeg 다중 구간 렌더링 및 다운로드
+- CapCut 호환 MP4/SRT 패키지
+
+미완료:
+
+- Multi Upload
+- 실시간 Upload Progress
+- 편집 결과 서버 저장 및 ffmpeg 렌더링
+- 편집 프로젝트 네이티브 포맷 생성
+- Highlight
+- Shorts
+- Thumbnail
+- YouTube
+- NAS

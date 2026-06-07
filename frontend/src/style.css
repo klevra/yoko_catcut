@@ -5,10 +5,48 @@ body {
   color: #f5f5f5;
 }
 
+.app-footer {
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  z-index: 20;
+  padding: 6px 10px;
+  color: #9da5b4;
+  font-size: 0.75rem;
+  background: rgb(16 17 20 / 85%);
+  border: 1px solid #30333b;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
 main {
   max-width: 860px;
   margin: 0 auto;
   padding: 40px 20px;
+}
+
+.login-shell {
+  display: grid;
+  min-height: 70vh;
+  place-items: center;
+}
+
+.login-panel {
+  width: min(460px, 100%);
+  padding: 28px;
+  border: 1px solid #30333b;
+  border-radius: 16px;
+  background: #181a20;
+}
+
+.login-panel h1 {
+  margin-top: 0;
+}
+
+.login-note {
+  color: #9da5b4;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .panel, .dropzone {
@@ -43,9 +81,124 @@ button {
   cursor: pointer;
 }
 
+.btn-primary {
+  background: #6d5dfc;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #343844;
+  color: #fff;
+}
+
+.btn-danger {
+  background: #b6384d;
+  color: #fff;
+}
+
+.upload-panel {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 16px;
+  background: #181a20;
+}
+
+.upload-panel h3 {
+  margin-top: 0;
+}
+
+.upload-message {
+  margin-top: 12px;
+  color: #b3b3b3;
+}
+
+.jobs-panel {
+  margin-top: 24px;
+}
+
+.jobs-list {
+  display: grid;
+  gap: 10px;
+}
+
+.upload-list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.upload-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px;
+  border: 1px solid #30333b;
+  border-radius: 10px;
+  background: #111318;
+}
+
+.upload-card strong,
+.upload-card small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.upload-card small {
+  margin-top: 7px;
+  color: #aeb3bf;
+}
+
+.upload-card button {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+.job-row {
+  padding: 14px;
+  border: 1px solid #30333b;
+  border-radius: 10px;
+  background: #111318;
+}
+
+.job-row > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.job-row small {
+  display: block;
+  margin-top: 8px;
+  color: #aeb3bf;
+}
+
+.job-status {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #343844;
+  font-size: 0.75rem;
+}
+
+.status-completed {
+  background: #176b45;
+}
+
+.status-failed,
+.status-canceled {
+  background: #8b2638;
+}
+
+.job-error {
+  color: #ff9aaa !important;
+}
+
 .dropzone {
   text-align: center;
   border-style: dashed;
+  cursor: pointer;
 }
 
 pre {

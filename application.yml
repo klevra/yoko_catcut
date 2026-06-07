@@ -11,6 +11,9 @@ app:
   storage:
     type: local
 
+  auth:
+    users_file: ./workspace/.system/accounts/users.json
+
   nas:
     enabled: false
     protocol: smb
@@ -26,11 +29,13 @@ app:
 
   model:
     whisper_path: ./models/whisper
-    whisper_model: large-v3
+    whisper_model: base
     device: cpu
 
   ffmpeg:
     binary: ffmpeg
+    probe_binary: ffprobe
+    subtitle_font: Noto Sans CJK KR
 
   logging:
     level: INFO

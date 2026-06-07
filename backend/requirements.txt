@@ -4,3 +4,7 @@ python-multipart==0.0.20
 pydantic==2.10.4
 PyYAML==6.0.2
 SQLAlchemy==2.0.36
+faster-whisper==1.1.1
+requests==2.32.3
+huggingface-hub==0.36.0
+numpy==2.2.6

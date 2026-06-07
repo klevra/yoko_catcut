@@ -1,24 +1,19 @@
 import React from "react";
-import { api } from "../api/client";
+import { api, Project } from "../api/client";
 import "./ProjectList.css";
-
-interface Project {
-  user_id: string;
-  project_name: string;
-  path: string;
-  created_at: string;
-}
 
 interface Props {
   projects: Project[];
   userId: string;
   onProjectDeleted: () => void;
+  onProjectOpen: (projectName: string) => void;
 }
 
 export default function ProjectList({
   projects,
   userId,
   onProjectDeleted,
+  onProjectOpen,
 }: Props) {
   const handleDelete = async (projectName: string) => {
     if (confirm(`Are you sure you want to delete "${projectName}"?`)) {
@@ -50,7 +45,12 @@ export default function ProjectList({
               </p>
               <p className="project-path">{project.path}</p>
               <div className="project-actions">
-                <button className="btn-primary">Open</button>
+                <button
+                  className="btn-primary"
+                  onClick={() => onProjectOpen(project.project_name)}
+                >
+                  Open
+                </button>
                 <button
                   className="btn-danger"
                   onClick={() => handleDelete(project.project_name)}
