@@ -1,4 +1,4 @@
-# Yoko CatCut Requirements v0.5.0
+# Yoko CatCut Requirements v0.5.1
 
 ## 프로젝트 정보
 
@@ -48,6 +48,10 @@ Desktop Application 개발 금지.
 - 계정과 비밀번호 해시는 파일로 관리한다.
 - 기본 계정 파일 경로는 `workspace/.system/accounts/users.json`이다.
 - 기본 계정은 `default-user`, 기본 비밀번호는 `yoko1234`이다.
+- 루트의 `readme_account.txt`에 기본 계정과 등록 승인 절차를 기록한다.
+- 신규 계정 생성 시 `workspace/{account}/lock.lck` 파일을 생성한다.
+- `lock.lck` 파일이 존재하는 계정은 로그인할 수 없다.
+- 관리자가 해당 `lock.lck` 파일을 삭제하면 로그인 승인 상태가 된다.
 - 로그인 성공 시 파일에 저장된 토큰을 사용해 API와 미디어 URL을 인증한다.
 - 사용자는 본인 계정의 프로젝트, 업로드, Job, 결과물만 조회하고 수정할 수 있다.
 - 프론트엔드는 접속한 호스트 기준으로 `http://{host}:8000/api/v1`을 사용해 다른 PC와 모바일에서도 동작한다.

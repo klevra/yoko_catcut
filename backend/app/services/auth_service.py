@@ -22,6 +22,11 @@ class AuthService:
         user = users.get(user_id)
         if not user or not self._verify_password(password, user):
             raise ValueError("Invalid account or password")
+        lock_file = self._lock_file(user_id)
+        if lock_file.exists():
+            raise ValueError(
+                f"Account is waiting for approval. Remove {lock_file} to approve login."
+            )
         if not user.get("token"):
             user["token"] = secrets.token_urlsafe(32)
         user["last_login_at"] = datetime.now().isoformat()
@@ -30,6 +35,40 @@ class AuthService:
         return {
             "user_id": user_id,
             "token": user["token"],
+            "users_file": str(self.users_file),
+        }
+
+    def register(self, user_id: str, password: str) -> dict:
+        self._validate_user_id(user_id)
+        if len(password) < 8:
+            raise ValueError("Password must be at least 8 characters")
+        users = self._read()
+        if user_id in users:
+            raise ValueError("Account already exists")
+
+        account_dir = self._account_dir(user_id)
+        account_dir.mkdir(parents=True, exist_ok=True)
+        lock_file = self._lock_file(user_id)
+        lock_file.write_text(
+            "Account registration is pending approval.\n"
+            "Delete this lock.lck file to approve login for this account.\n",
+            encoding="utf-8",
+        )
+        salt = secrets.token_hex(16)
+        users[user_id] = {
+            "password_hash": self._hash_password(password, salt),
+            "salt": salt,
+            "token": "",
+            "created_at": datetime.now().isoformat(),
+            "account_dir": str(account_dir),
+            "lock_file": str(lock_file),
+        }
+        self._write(users)
+        return {
+            "user_id": user_id,
+            "status": "pending_approval",
+            "account_dir": str(account_dir),
+            "lock_file": str(lock_file),
             "users_file": str(self.users_file),
         }
 
@@ -49,6 +88,8 @@ class AuthService:
     def _ensure_default_user(self) -> None:
         if self.users_file.exists():
             return
+        account_dir = self._account_dir("default-user")
+        account_dir.mkdir(parents=True, exist_ok=True)
         salt = secrets.token_hex(16)
         users = {
             "default-user": {
@@ -56,9 +97,17 @@ class AuthService:
                 "salt": salt,
                 "token": secrets.token_urlsafe(32),
                 "created_at": datetime.now().isoformat(),
+                "account_dir": str(account_dir),
+                "lock_file": "",
             }
         }
         self._write(users)
+
+    def _account_dir(self, user_id: str) -> Path:
+        return Path(self.settings.workspace_root) / user_id
+
+    def _lock_file(self, user_id: str) -> Path:
+        return self._account_dir(user_id) / "lock.lck"
 
     def _read(self) -> dict:
         if not self.users_file.exists():

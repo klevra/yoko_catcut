@@ -12,9 +12,22 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class RegisterRequest(BaseModel):
+    user_id: str
+    password: str
+
+
 @router.post("/login")
 def login(payload: LoginRequest):
     try:
         return auth_service.login(payload.user_id, payload.password)
     except ValueError as exc:
         raise HTTPException(status_code=401, detail=str(exc))
+
+
+@router.post("/register")
+def register(payload: RegisterRequest):
+    try:
+        return auth_service.register(payload.user_id, payload.password)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))

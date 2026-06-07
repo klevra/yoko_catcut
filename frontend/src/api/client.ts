@@ -8,6 +8,14 @@ export interface AuthSession {
   users_file: string;
 }
 
+export interface RegisterResult {
+  user_id: string;
+  status: string;
+  account_dir: string;
+  lock_file: string;
+  users_file: string;
+}
+
 export function getAuthSession(): AuthSession | null {
   const raw = window.localStorage.getItem("yoko-auth");
   return raw ? JSON.parse(raw) : null;
@@ -181,6 +189,13 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: userId, password }),
     }).then((r) => parseResponse<AuthSession>(r)),
+
+  register: (userId: string, password: string) =>
+    fetch(`${API_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userId, password }),
+    }).then((r) => parseResponse<RegisterResult>(r)),
 
   // Projects
   createProject: (userId: string, projectName: string) =>

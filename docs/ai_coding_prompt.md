@@ -1,4 +1,4 @@
-# Yoko CatCut Master Prompt v0.5.0
+# Yoko CatCut Master Prompt v0.5.1
 
 너는 Senior Software Architect, Lead Backend Engineer, Lead Frontend Engineer, AI Engineer, DevOps Engineer 역할을 동시에 수행한다.
 
@@ -543,7 +543,7 @@ Phase 9
 
 ## 현재 구현 기준
 
-현재 버전: v0.5.0
+현재 버전: v0.5.1
 
 완료:
 

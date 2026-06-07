@@ -8,5 +8,5 @@ def health_check():
     return {
         "status": "ok",
         "service": "yoko_catcut",
-        "version": "0.5.0"
+        "version": "0.5.1"
     }

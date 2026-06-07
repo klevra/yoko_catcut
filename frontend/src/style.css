@@ -49,6 +49,10 @@ main {
   line-height: 1.5;
 }
 
+.login-switch {
+  width: 100%;
+}
+
 .panel, .dropzone {
   border: 1px solid #333;
   border-radius: 16px;
