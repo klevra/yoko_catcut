@@ -158,9 +158,7 @@ function LoginPage({ onLogin }: { onLogin: (session: AuthSession) => void }) {
         </button>
         {message && <p className="editor-error">{message}</p>}
         <p className="login-note">
-          기본 계정은 <code>default-user</code>, 기본 비밀번호는{" "}
-          <code>yoko1234</code>입니다. 새 계정은 계정 폴더의{" "}
-          <code>lock.lck</code> 파일을 삭제해야 로그인됩니다.
+          계정 등록 후, 관리자에게 계정 사용 승인을 요청하세요.
         </p>
       </section>
     </main>

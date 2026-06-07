@@ -2,6 +2,32 @@
 
 모든 변경사항은 Semantic Versioning 기준으로 관리한다.
 
+## v0.6.0
+
+완료일: 2026-06-08
+
+상태: Completed
+
+### Added
+
+- 로그인 버튼 전체 폭 정렬
+- 계정 등록 승인 요청 안내 문구
+- `application.yml` 런타임 OS 설정
+- 기동 시 설정 OS와 감지 OS 체크
+- macOS, Windows, Ubuntu, RHEL, Docker 설치 스크립트
+- 설치 경로 입력
+- 설치 시 `default-user` 비밀번호 입력
+- 비밀번호 재설정 스크립트
+- OS별 설치 매뉴얼
+
+### Verified
+
+- 프론트엔드 TypeScript 및 Vite 빌드
+- 백엔드 Python 컴파일
+- 런타임 OS 설정 로드
+- 계정 비밀번호 스크립트 생성 및 문법 확인
+- 서비스 `v0.6.0` 헬스 체크
+
 ## v0.5.1
 
 완료일: 2026-06-08

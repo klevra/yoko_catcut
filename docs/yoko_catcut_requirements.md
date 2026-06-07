@@ -1,4 +1,4 @@
-# Yoko CatCut Requirements v0.5.1
+# Yoko CatCut Requirements v0.6.0
 
 ## 프로젝트 정보
 
@@ -55,6 +55,17 @@ Desktop Application 개발 금지.
 - 로그인 성공 시 파일에 저장된 토큰을 사용해 API와 미디어 URL을 인증한다.
 - 사용자는 본인 계정의 프로젝트, 업로드, Job, 결과물만 조회하고 수정할 수 있다.
 - 프론트엔드는 접속한 호스트 기준으로 `http://{host}:8000/api/v1`을 사용해 다른 PC와 모바일에서도 동작한다.
+
+## 설치 및 OS 런타임
+
+- `application.yml`은 `app.runtime.os`와 `supported_os`를 가진다.
+- 지원 OS 값은 `win`, `mac`, `rhel`, `ubuntu`, `docker-image`이다.
+- 백엔드는 기동 시 설정 OS와 감지 OS를 비교한다.
+- OS별 설치 프로그램은 필수 패키지와 프로그램을 확인한다.
+- 필수 항목이 없으면 OS별 설치 명령을 실행하거나 설치 안내를 출력한다.
+- 설치 시 설치 경로를 입력받는다.
+- 설치 시 `default-user` 비밀번호를 입력받아 계정 파일을 생성한다.
+- 비밀번호 재설정 스크립트를 제공한다.
 
 ## 음성 및 화자 분석
 

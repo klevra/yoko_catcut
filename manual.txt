@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════════════════════════
-                        YOKO CATCUT v0.1.2
+                        YOKO CATCUT v0.6.0
                     AI-Powered Video Editing Platform
                             사용자 매뉴얼
 ═══════════════════════════════════════════════════════════════════════════════
@@ -67,6 +67,76 @@ cd ~/Documents
 git clone https://github.com/klevra/yoko_catcut.git
 cd yoko_catcut
 ```
+
+2.3 OS별 설치 프로그램
+─────────────────────────────────────────────────────────────────────────────
+
+application.yml의 runtime.os 값으로 지원 OS를 관리한다.
+
+지원 값:
+  ✓ win
+  ✓ mac
+  ✓ rhel
+  ✓ ubuntu
+  ✓ docker-image
+
+기본 Docker 실행은 docker-image를 사용한다.
+
+macOS:
+  ```bash
+  bash install/macos/install.sh
+  ```
+
+Windows:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File install\windows\install.ps1
+  ```
+
+Ubuntu:
+  ```bash
+  bash install/ubuntu/install.sh
+  ```
+
+RHEL/Rocky/Alma:
+  ```bash
+  bash install/rhel/install.sh
+  ```
+
+Docker image:
+  ```bash
+  bash install/docker/install.sh
+  ```
+
+설치 프로그램 공통 동작:
+  1. 필수 패키지와 프로그램 확인
+  2. 없으면 OS별 설치 명령 실행 또는 설치 안내
+  3. 설치 경로 입력
+  4. default-user 비밀번호 입력
+  5. 계정 파일 생성
+
+OS별 상세 문서:
+  - docs/install/macos.md
+  - docs/install/windows.md
+  - docs/install/ubuntu.md
+  - docs/install/rhel.md
+  - docs/install/docker.md
+
+2.4 비밀번호 재설정
+─────────────────────────────────────────────────────────────────────────────
+
+macOS/Linux:
+  ```bash
+  scripts/reset-password.sh default-user
+  ```
+
+Windows:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File scripts\reset-password.ps1 default-user
+  ```
+
+비밀번호는 workspace/.system/accounts/users.json에 해시로 저장된다.
+신규 계정은 workspace/{account}/lock.lck 파일이 있으면 로그인할 수 없다.
+관리자가 lock.lck를 삭제하면 로그인 승인 상태가 된다.
 
 ═══════════════════════════════════════════════════════════════════════════════
 3. 실행 방법

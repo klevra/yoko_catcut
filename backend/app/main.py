@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import auth, health, projects, uploads, jobs
-from app.core.config import get_settings
+from app.core.config import get_settings, validate_runtime_os
 from app.services.job_processor import JobProcessor
 
 settings = get_settings()
@@ -13,13 +13,14 @@ job_processor = JobProcessor()
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    validate_runtime_os(settings)
     job_processor.start()
     yield
     job_processor.stop()
 
 app = FastAPI(
     title="Yoko CatCut API",
-    version="0.5.1",
+    version="0.6.0",
     description="AI video editing platform backend",
     lifespan=lifespan,
 )

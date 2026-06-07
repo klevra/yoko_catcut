@@ -156,6 +156,27 @@
 
 ## v0.6.0
 
+상태: Completed
+
+목표: OS별 설치와 런타임 설정
+
+- [x] 로그인 버튼 폭 정렬
+- [x] 계정 등록 안내 문구 변경
+- [x] `application.yml` OS 정보 추가
+- [x] 백엔드 기동 시 OS 정보 체크
+- [x] macOS 설치 스크립트
+- [x] Windows 설치 스크립트
+- [x] Ubuntu 설치 스크립트
+- [x] RHEL 계열 설치 스크립트
+- [x] Docker image 설치 스크립트
+- [x] 설치 경로 지정
+- [x] 설치 시 default-user 비밀번호 입력
+- [x] 비밀번호 재설정 스크립트
+- [x] OS별 설치 매뉴얼
+- [x] manual.txt 설치 항목 갱신
+
+## v0.7.0
+
 상태: Planned
 
 목표: 숏폼 생성
@@ -165,7 +186,7 @@
 - [ ] Shorts Generator
 - [ ] Shorts Viewer
 
-## v0.7.0
+## v0.8.0
 
 상태: Planned
 
@@ -175,7 +196,7 @@
 - [ ] PNG/JPG 출력
 - [ ] Thumbnail Viewer
 
-## v0.8.0
+## v0.9.0
 
 상태: Planned
 
@@ -187,7 +208,7 @@
 - [ ] Highlight 생성
 - [ ] Shorts 생성
 
-## v0.9.0
+## v0.10.0
 
 상태: Planned
 
