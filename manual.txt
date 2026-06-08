@@ -506,8 +506,32 @@ npm run dev
 - `BACKEND_CONTAINER_PORT`: 컨테이너 내부 백엔드 포트
 - `FRONTEND_HOST_PORT`: 호스트에서 열릴 프론트엔드 포트
 - `FRONTEND_CONTAINER_PORT`: 컨테이너 내부 프론트엔드 포트
+- `VITE_ALLOWED_HOSTS`: IP가 아닌 호스트명으로 접속할 때 허용할 프론트엔드 호스트
 
 예: `.env` 파일에 `FRONTEND_HOST_PORT=4000`로 설정하면 브라우저에서 http://localhost:4000 로 접속합니다.
+
+IP가 아닌 PC 이름 또는 로컬 호스트명으로 접속할 때 아래 메시지가 보이면
+Vite 프론트엔드 서버의 허용 호스트 설정 문제입니다.
+
+```text
+Blocked request. This host ("klevra") is not allowed.
+To allow this host, add "klevra" to `server.allowedHosts` in vite.config.js.
+```
+
+기본 Docker 실행은 모든 호스트명을 허용하도록 `VITE_ALLOWED_HOSTS=true`를 사용합니다.
+특정 호스트만 허용하려면 프로젝트 루트의 `.env` 파일에 쉼표로 구분해 작성합니다.
+
+```env
+VITE_ALLOWED_HOSTS=klevra,localhost,127.0.0.1
+FRONTEND_HOST_PORT=4000
+```
+
+설정 변경 후에는 프론트엔드 컨테이너를 다시 빌드하고 재시작합니다.
+
+```bash
+docker compose build frontend
+docker compose up -d --force-recreate frontend
+```
 
 9.2 application.yml 업데이터
 ───────────────────────────────────────────────────────────────────────────────

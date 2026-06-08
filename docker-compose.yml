@@ -19,5 +19,7 @@ services:
     container_name: "${FRONTEND_CONTAINER_NAME:-yoko_catcut_frontend}"
     ports:
       - "${FRONTEND_HOST_PORT:-3000}:${FRONTEND_CONTAINER_PORT:-3000}"
+    environment:
+      - VITE_ALLOWED_HOSTS=${VITE_ALLOWED_HOSTS:-true}
     depends_on:
       - backend
