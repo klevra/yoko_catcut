@@ -92,6 +92,14 @@ Windows:
   powershell -ExecutionPolicy Bypass -File install\windows\install.ps1
   ```
 
+Windows에서 Git clone 없이 GitHub에서 바로 설치:
+  ```powershell
+  Invoke-WebRequest `
+    -Uri https://raw.githubusercontent.com/klevra/yoko_catcut/main/install/windows/install.ps1 `
+    -OutFile install.ps1
+  powershell -ExecutionPolicy Bypass -File .\install.ps1 -DownloadFromGit
+  ```
+
 Ubuntu:
   ```bash
   bash install/ubuntu/install.sh
@@ -113,6 +121,13 @@ Docker image:
   3. 설치 경로 입력
   4. default-user 비밀번호 입력
   5. 계정 파일 생성
+  6. Docker 이미지 빌드로 서비스 내부 의존성 설치
+
+Windows 추가 옵션:
+  - -DownloadFromGit: GitHub ZIP을 curl.exe로 내려받아 설치
+  - -InstallNativeDependencies: 로컬 개발용 FFmpeg, Node.js, Python venv,
+    backend requirements, frontend npm install 수행
+  - -SkipDockerBuild: Docker 이미지 빌드를 생략
 
 OS별 상세 문서:
   - docs/install/macos.md
@@ -133,6 +148,29 @@ Windows:
   ```powershell
   powershell -ExecutionPolicy Bypass -File scripts\reset-password.ps1 default-user
   ```
+
+2.5 웹 배경 캐릭터 이미지
+─────────────────────────────────────────────────────────────────────────────
+
+웹페이지 좌측 하단에는 배경 캐릭터 이미지를 표시할 수 있다.
+
+기본 저장 경로:
+  ```text
+  frontend/background.png
+  ```
+
+권장 이미지:
+  ✓ PNG
+  ✓ 정사각형
+  ✓ 300px x 300px
+
+표시 방식:
+  ✓ 좌측 하단 고정
+  ✓ 50% 투명도
+  ✓ 클릭과 입력을 방해하지 않는 배경 레이어
+
+이미지를 변경하려면 같은 경로의 `background.png` 파일을 교체한 뒤
+프론트엔드를 다시 빌드하거나 Docker 서비스를 재기동한다.
 
 비밀번호는 workspace/.system/accounts/users.json에 해시로 저장된다.
 신규 계정은 workspace/{account}/lock.lck 파일이 있으면 로그인할 수 없다.

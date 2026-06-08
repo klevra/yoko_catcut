@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import VideoEditor from "./pages/VideoEditor";
 import AppFooter from "./components/AppFooter";
 import { api, AuthSession, getAuthSession, setAuthSession } from "./api/client";
+import backgroundCharacterUrl from "../background.png";
 import "./style.css";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
   if (!session) {
     return (
       <>
+        <BackgroundCharacter />
         <LoginPage onLogin={setSession} />
         <AppFooter />
       </>
@@ -42,6 +44,7 @@ function App() {
   if (url.pathname === "/editor" && uploadId) {
     return (
       <>
+        <BackgroundCharacter />
         <VideoEditor uploadId={uploadId} onBack={() => navigate("/")} />
         <AppFooter />
       </>
@@ -50,6 +53,7 @@ function App() {
 
   return (
     <>
+      <BackgroundCharacter />
       <Dashboard
         userId={session.user_id}
         usersFile={session.users_file}
@@ -60,6 +64,17 @@ function App() {
       />
       <AppFooter />
     </>
+  );
+}
+
+function BackgroundCharacter() {
+  return (
+    <img
+      src={backgroundCharacterUrl}
+      className="background-character"
+      alt=""
+      aria-hidden="true"
+    />
   );
 }
 
